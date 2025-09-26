@@ -1,5 +1,7 @@
 package sat.solucoes.web.core.domain;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 public class HotelDomain {
 
 	private Long id;
@@ -104,7 +106,9 @@ public class HotelDomain {
 		this.cnpj = cnpj;
 	}
 	
-	
+	public boolean isLoginCorrect(PasswordEncoder passwordEncoder, LoginDomain login) {
+        return passwordEncoder.matches(login.getPassword(), this.password);
+    }
 	
 	
 }
