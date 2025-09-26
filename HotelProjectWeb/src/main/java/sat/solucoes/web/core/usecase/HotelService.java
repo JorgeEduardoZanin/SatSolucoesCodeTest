@@ -43,12 +43,13 @@ public class HotelService implements HotelUseCase {
 	public HotelDomain update(HotelDomain hotelDomain, long id) {
 		
 		var domain = hotelRepository.findById(id);
+		
 		domain.setAddress(hotelDomain.getAddress());
 		domain.setCity(hotelDomain.getCity());
 		domain.setNumber(hotelDomain.getNumber());
 		domain.setState(hotelDomain.getState());
 		domain.setEmail(hotelDomain.getEmail());
-		
+
 		var response = hotelRepository.update(domain);
 		
 		return response;

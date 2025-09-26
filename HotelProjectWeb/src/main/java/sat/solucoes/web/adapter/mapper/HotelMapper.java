@@ -1,6 +1,7 @@
 package sat.solucoes.web.adapter.mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 import sat.solucoes.web.adapter.dto.request.hotel.HotelCreateRequest;
 import sat.solucoes.web.adapter.dto.request.hotel.HotelUpdateRequest;
@@ -14,6 +15,7 @@ import sat.solucoes.web.core.domain.HotelDomain;
 public class HotelMapper {
 
 	public static HotelDomain hotelRequestToHotelDomain(HotelCreateRequest hotelRequest) {
+	
 		return new HotelDomain(
 				hotelRequest.name(),
 				hotelRequest.password(),
@@ -26,7 +28,7 @@ public class HotelMapper {
 	}
 	
 	public static HotelEntity hotelDomainToHotelEntity(HotelDomain hotelDomain) {
-		return new HotelEntity(
+		var entity =  new HotelEntity(
 				hotelDomain.getName(),
 				hotelDomain.getPassword(),
 				hotelDomain.getEmail(),
@@ -35,17 +37,22 @@ public class HotelMapper {
 				hotelDomain.getState(),
 				hotelDomain.getCity(),
 				hotelDomain.getCnpj());
+
+		 Optional.ofNullable(hotelDomain.getId()).ifPresent(entity::setId);
+		 
+		 return entity;
+	
 	}
 	
 	public static HotelDomain hotelUpdateRequestToHotelDomain(HotelUpdateRequest hotelRequest) {
 		var domain = new HotelDomain();
 		domain.setName(hotelRequest.name());
-		domain.setAddress(hotelRequest.Address());
+		domain.setAddress(hotelRequest.address());
 		domain.setCity(hotelRequest.city());
 		domain.setNumber(hotelRequest.number());
 		domain.setState(hotelRequest.state());
 		domain.setEmail(hotelRequest.email());
-		
+		System.out.println(domain);
 		return domain;
 	}
 	
@@ -81,15 +88,19 @@ public class HotelMapper {
 	}
 	
 	public static HotelDomain hotelEntityToHotelDomain(HotelEntity hotelEntity) {
-		return new HotelDomain(
+		var domain = new HotelDomain(
 				hotelEntity.getName(), 
-				null, 
+				hotelEntity.getPassword(), 
 				hotelEntity.getEmail(), 
 				hotelEntity.getAddress(),
 				hotelEntity.getNumber(), 
 				hotelEntity.getState(), 
 				hotelEntity.getCity(), 
 				hotelEntity.getCnpj());	
+
+		domain.setId(hotelEntity.getId());
+		
+		return domain;
 	}
 	
 	public static HotelDomain hotelLoginResponseToHotelDomain(HotelLoginResponse response) {
@@ -101,6 +112,20 @@ public class HotelMapper {
 		domain.setName(response.name());
 		
 		return domain;
+		
+	}
+	
+	public static List<HotelDomain> listHotelFindAllResponseToListHotelDomain(List<HotelFindAllResponse> responses){
+		
+		return responses.stream()
+				.map(s ->{
+					var domain = new HotelDomain();
+					domain.setName(s.name());
+					domain.setCity(s.city());
+					domain.setState(s.state());
+					return domain;
+				})
+				.toList();
 		
 	}
 	

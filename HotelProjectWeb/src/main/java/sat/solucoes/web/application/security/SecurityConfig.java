@@ -35,9 +35,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+ 
     	http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/hotel").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/hotel", "/login").permitAll()
+                
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

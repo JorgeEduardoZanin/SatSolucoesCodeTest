@@ -1,6 +1,7 @@
 package sat.solucoes.web.adapter.in.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class LoginController {
 		this.loginUseCase = loginUseCase;
 	}
 
+	@PostMapping
 	public ResponseEntity<LoginResponse> login (@RequestBody LoginRequest loginRequest){
 		var response = loginUseCase.login(LoginMapper.LoginRequestToLoginDomain(loginRequest));
 		

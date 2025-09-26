@@ -23,6 +23,8 @@ public class HotelDomain {
 	private String cnpj;
 
 	public HotelDomain(String name, String password, String email,  String address, String number, String state, String city, String cnpj) {
+		this.password = password;
+		this.email = email;
 		this.name = name;
 		this.address = address;
 		this.number = number;
@@ -106,6 +108,12 @@ public class HotelDomain {
 		this.cnpj = cnpj;
 	}
 	
+	@Override
+	public String toString() {
+		return "HotelDomain [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", address="
+				+ address + ", number=" + number + ", state=" + state + ", city=" + city + ", cnpj=" + cnpj + "]";
+	}
+
 	public boolean isLoginCorrect(PasswordEncoder passwordEncoder, LoginDomain login) {
         return passwordEncoder.matches(login.getPassword(), this.password);
     }

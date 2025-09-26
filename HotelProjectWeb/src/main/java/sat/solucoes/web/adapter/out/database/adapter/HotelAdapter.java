@@ -29,19 +29,20 @@ public class HotelAdapter implements HotelRepository{
 	@Override
 	public HotelDomain findById(long id) {
 		var response = hotelDatabaseRepository.findById(id)
-			.orElseThrow();
+			.orElseThrow(() -> new RuntimeException("Hotel nao encontrado"));
 		return HotelMapper.hotelEntityToHotelDomain(response);
 	}
 
 	@Override
 	public List<HotelDomain> findAllPaginate(int page, int pageSize) {
-		hotelDatabaseRepository.findAllPaginated(PageRequest.of(page, pageSize, Sort.Direction.ASC, "name"));
-		return null;
+		var response = hotelDatabaseRepository.findAllPaginated(PageRequest.of(page, pageSize, Sort.Direction.ASC, "name"));
+		return HotelMapper.listHotelFindAllResponseToListHotelDomain(response.getContent());
 	}
 
 	@Override
 	public HotelDomain update(HotelDomain hotelDomain) {
-		var response = hotelDatabaseRepository.saveAndFlush(HotelMapper.hotelDomainToHotelEntity(hotelDomain));
+		System.out.println("teste"+hotelDomain.getId());
+		var response = hotelDatabaseRepository.save(HotelMapper.hotelDomainToHotelEntity(hotelDomain));
 		return HotelMapper.hotelEntityToHotelDomain(response);
 	}
 
@@ -52,8 +53,8 @@ public class HotelAdapter implements HotelRepository{
 
 	@Override
 	public HotelDomain findHotelByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		var response = hotelDatabaseRepository.findHotelByEmail(email);
+		return HotelMapper.hotelLoginResponseToHotelDomain(response);
 	}
 
 }

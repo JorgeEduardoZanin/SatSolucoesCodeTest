@@ -40,6 +40,8 @@ public class HotelEntity {
 	private String cnpj;
 
 	public HotelEntity(String name, String password, String email,  String address, String number, String state, String city, String cnpj) {
+		this.password = password;
+		this.email = email;
 		this.name = name;
 		this.address = address;
 		this.number = number;
