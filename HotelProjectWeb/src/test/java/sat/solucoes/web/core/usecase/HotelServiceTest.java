@@ -50,8 +50,8 @@ class HotelServiceTest {
         h.setCity("São Paulo");
         h.setNumber("123");
         h.setState("SP");
-        h.setEmail("hotel@example.com");
-        h.setPassword("plainPassword");
+        h.setEmail("hotel@gmail.com");
+        h.setPassword("senhaCrua");
         return h;
     }
 
